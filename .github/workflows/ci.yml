@@ -1,0 +1,9 @@
+  name: my-ci-flow
+  on: [push]
+  jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+        - name: Run one-line command
+          run: echo Hello world
