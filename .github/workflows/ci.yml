@@ -1,4 +1,4 @@
-ame: Selenium Test
+name: Selenium Test
 
 on: [push]
 
