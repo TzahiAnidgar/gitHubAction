@@ -3,13 +3,18 @@ import unittest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 import time
 
 class MyTest(unittest.TestCase):
     def setUp(self):
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')  # Bypass OS security model, REQUIRED on TravisCI and Docker-based setups
+        options.add_argument('--disable-dev-shm-usage')
         self.SEARCH_INPUT = '//input[@id="search"]'
         self.url = "https://www.youtube.com/"
-        self.driver = webdriver.Chrome()
+        self.driver = webdriver.Chrome(options=options)
         self.driver.maximize_window()
 
     def tearDown(self):
