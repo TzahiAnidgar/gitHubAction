@@ -7,3 +7,5 @@
       steps:
         - name: Run one-line command
           run: echo Hello world
+        - name: install python
+          run: apt install python
