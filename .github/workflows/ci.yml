@@ -1,7 +1,5 @@
 name: Selenium Test
-
 on: [push]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,7 +7,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       name: Checkout code
-    
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
