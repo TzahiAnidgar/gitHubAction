@@ -6,6 +6,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import time
 
+
 class MyTest(unittest.TestCase):
     def setUp(self):
         options = Options()
