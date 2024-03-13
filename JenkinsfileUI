@@ -18,22 +18,13 @@ pipeline {
         }
       stage('Install Dependencies') {
             steps {
-                // Use a virtual environment to isolate Python dependencies
-                sh '''
-                pip3 install selenium
-                '''
-                // Install ChromeDriver
-                // Download and extract ChromeDriver using curl
-                sh 'curl -O https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip'
-                sh 'unzip chromedriver_linux64.zip -d /usr/local/bin/'
-                // Verify ChromeDriver installation
-                sh 'chromedriver --version'
+                sh 'pip3 install --no-cache-dir -r requirements.txt'
             }
         }
         stage('Run Tests') {
             steps {
                 // Run your Selenium test script
-                sh 'python3 api_test.py'
+                sh 'python3 test.py'
             }
         }
     }
