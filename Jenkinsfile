@@ -6,11 +6,11 @@
             steps {
                 script {
                     // Define image name and tag, adjust as needed
-                    def imageName = 'myapp:latest'
+                    def imageName = 'mytest:latest'
 
                     // Build the Docker image
                     // Assumes Dockerfile is in the root of the project
-                    docker.build(imageName)
+                    sh 'docker build -t mytest .'
                 }
             }
         }
