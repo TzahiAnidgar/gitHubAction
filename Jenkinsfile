@@ -8,13 +8,6 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Setup python'){
-           steps{
-           withPythonEnv('/usr/bin/python3.8') {
-                sh 'echo "Job is starting" '
-            }
-            }
-         }
         stage('Setup Environment') {
             steps {
                 // Install dependencies, e.g., Selenium
