@@ -15,21 +15,21 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                // Use a virtual environment to isolate Python dependencies
+                // Install Selenium
                 sh '''
                 python3 -m venv venv
                 source venv/bin/activate
                 pip install selenium
                 '''
-                // Install ChromeDriver
-                // Adjust this command to match the version you need and your OS
-                sh 'wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip'
+                // Download and extract ChromeDriver using curl
+                sh 'curl -O https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip'
                 sh 'unzip chromedriver_linux64.zip -d /usr/local/bin/'
                 sh 'rm chromedriver_linux64.zip'
-                // Verify installation
+                // Verify ChromeDriver installation
                 sh 'chromedriver --version'
             }
-        }
+    }
+
         stage('Run Tests') {
             steps {
                 sh '''
