@@ -12,7 +12,7 @@ pipeline {
             steps {
                 // Install dependencies, e.g., Selenium
                 // This can be customized based on your project's requirements
-                sh 'pip install selenium'
+                sh 'pip3 install selenium'
             }
         }
         stage('Run Tests') {
