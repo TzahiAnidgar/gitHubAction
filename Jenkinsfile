@@ -18,7 +18,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Run your Selenium test script
-                sh 'python test.py'
+                sh 'python3 test.py'
             }
         }
     }
