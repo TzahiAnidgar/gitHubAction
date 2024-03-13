@@ -1,42 +1,49 @@
-         pipeline {
+pipeline {
     agent any
 
-    stages {
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    // Define image name and tag, adjust as needed
-                    def imageName = 'mytest:latest'
+    environment {
+        // Optionally set path to include ChromeDriver if installed in a custom location
+        PATH = "$PATH:/tzahianidgar/local/bin"
+    }
 
-                    // Build the Docker image
-                    // Assumes Dockerfile is in the root of the project
-                    sh 'docker build -t mytest .'
-                }
+    stages {
+        stage('Preparation') {
+            steps {
+                // Checkout SCM
+                checkout scm
             }
         }
-
-        stage('Run Docker Container') {
+        stage('Install Dependencies') {
             steps {
-                script {
-                    def imageName = 'myapp:latest'
-                    def app = docker.image(imageName)
-
-                    // Run the Docker container
-                    // Adjust the run arguments as per your requirements
-                    app.run("--name myapp-container -d -p 80:80")
-                }
+                // Use a virtual environment to isolate Python dependencies
+                sh '''
+                python3 -m venv venv
+                source venv/bin/activate
+                pip install selenium
+                '''
+                // Install ChromeDriver
+                // Adjust this command to match the version you need and your OS
+                sh 'wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip'
+                sh 'unzip chromedriver_linux64.zip -d /usr/local/bin/'
+                sh 'rm chromedriver_linux64.zip'
+                // Verify installation
+                sh 'chromedriver --version'
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                sh '''
+                source venv/bin/activate
+                python3 -m pytest test.py
+                '''
             }
         }
     }
-
     post {
         always {
-            // Cleanup
-            script {
-                docker.image('myapp:latest').remove(force: true)
-                sh "docker rm -f myapp-container || true"
-            }
-            echo 'Post-build cleanup done.'
+            echo 'Cleaning up'
+            // Clean up any actions necessary after pipeline execution
+            sh 'rm -rf venv'
         }
     }
 }
