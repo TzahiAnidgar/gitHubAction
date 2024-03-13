@@ -1,20 +1,31 @@
 pipeline {
     agent any
+
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                echo 'Building..'
+                // Check out source code from version control
+                checkout scm
             }
         }
-        stage('Test') {
+        stage('Setup Environment') {
             steps {
-                echo 'Testing..'
+                // Install dependencies, e.g., Selenium
+                // This can be customized based on your project's requirements
+                sh 'pip install selenium'
             }
         }
-        stage('Deploy') {
+        stage('Run Tests') {
             steps {
-                echo 'Deploying..'
+                // Run your Selenium test script
+                sh 'python test.py'
             }
+        }
+    }
+    post {
+        always {
+            // Collect test reports or perform cleanup
+            echo 'Tests completed'
         }
     }
 }
