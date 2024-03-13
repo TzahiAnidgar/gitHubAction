@@ -25,8 +25,9 @@ pipeline {
                 // Install ChromeDriver
                 // Download and extract ChromeDriver using curl
                 sh 'curl -O https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip'
-                sh 'unzip chromedriver_linux64.zip -d /usr/local/bin/'
-                sh 'rm chromedriver_linux64.zip'
+                sh 'sudo unzip chromedriver_linux64.zip -d /usr/local/bin/'
+                sh 'sudo rm chromedriver_linux64.zip'
+                sh 'sudo chmod +x /usr/local/bin/chromedriver' // Ensure executable permissions
                 // Verify ChromeDriver installation
                 sh 'chromedriver --version'
             }
