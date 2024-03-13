@@ -8,7 +8,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Set Env') {
+        stage('Set Python Env') {
             steps {
                 sh '''
                     python3 -m venv venv
@@ -26,7 +26,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 // Run your Selenium test script
-                sh 'python3 api_test.py'
+                sh 'python api_test.py'
             }
         }
     }
